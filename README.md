@@ -1,108 +1,117 @@
-# PartnerHub
+# PartnerHub - 全栈招聘平台
 
-A full-stack job recruitment platform built with **Next.js 16**, **NestJS 11**, and **PostgreSQL**. Supports three user roles — **Applicant**, **Project Owner**, and **Admin** — with complete workflows for posting jobs, applying, reviewing applications, role-based access control, and real-time notifications.
+一个功能完整的全栈招聘平台，采用 **Next.js 16** + **NestJS 11** + **PostgreSQL** 构建。支持三个用户角色——**申请人**、**项目负责人** 和 **管理员**——具有完整的职位发布、申请、审核、基于角色的权限控制和实时通知功能。
 
-> **Demo Project** — Built to demonstrate full-stack development capabilities including architecture design, role-based access control, real-time notification system, and production-ready code practices.
+> **完整示例项目** — 展示全栈开发能力，包括系统架构设计、权限管理、通知系统和生产级代码实践。
 
 ---
 
-## Tech Stack
+## 技术栈
 
-| Layer | Technology |
+| 层级 | 技术 |
 |---|---|
-| **Frontend** | Next.js 16 (App Router), React 19, TypeScript, Ant Design 6, Tailwind CSS 4, Zustand |
-| **Backend** | NestJS 11, Prisma 5, Passport JWT, bcrypt |
-| **Database** | PostgreSQL (local portable / Neon cloud) |
-| **i18n** | English, French |
+| **前端** | Next.js 16 (App Router)、React 19、TypeScript、Ant Design 6、Tailwind CSS 4、Zustand |
+| **后端** | NestJS 11、Prisma 5、Passport JWT、bcrypt |
+| **数据库** | PostgreSQL（本地或云端 Neon） |
+| **多语言** | 英文、法文 |
+| **容器化** | Docker、Docker Compose |
 
 ---
 
-## Features
+## 主要功能
 
-### Applicant
-- Browse and search all active job posts
-- Collect (favorite) job posts
-- Apply to jobs with custom question forms + file upload (resume, portfolio)
-- Auto-fill personal info from saved profile
-- Track application status (applied → reviewed / rejected)
-- Receive notifications on status changes
-- Country / State cascading selection
+### 申请人
+- 🔍 浏览和搜索所有有效职位
+- ⭐ 收藏（收藏夹）职位
+- 📝 应用职位 - 填写自定义问卷 + 上传文件（简历、作品集）
+- 👤 自动填充保存的个人信息
+- 📊 跟踪应用状态（已申请 → 已审核 / 已拒绝）
+- 🔔 接收状态变化通知
+- 🌍 国家/地区级联选择
 
-### Project Owner
-- Create job posts from scratch or import from templates
-- Manage reusable job post templates
-- View applications sorted by unreviewed count (priority)
-- Review / reject applications with one click
-- Red badge indicator for posts with pending applications
-- Receive notifications when new applications arrive
+### 项目负责人
+- ✍️ 从零创建职位发布 或 从模板导入
+- 📋 管理可重用的职位发布模板
+- 📱 查看应用列表（按未审核数量排序）
+- ✅ 一键审核/拒绝应用
+- 🔴 标记指示有待审核应用的职位
+- 🔔 新应用到达时接收通知
 
-### Admin
-- User management (CRUD with audit trail)
-- Role & permission management
-- Dictionary management (countries, states, configuration)
-- Full audit trail logging for all changes
+### 管理员
+- 👥 用户管理（CRUD + 审计日志）
+- 🔐 角色和权限管理
+- 📚 字典管理（国家、地区、配置）
+- 📋 完整的审计日志（所有变更记录）
 
-### System
-- JWT authentication with session management
-- Role-based navigation & page access
-- Notification system (bell icon, unread count, mark as reviewed)
-- Responsive data tables with search, filter, sort, pagination
-- File upload with UUID-based naming
-- Draft auto-save for job post creation
-- Cross-page navigation with highlight & scroll-to-target
-- **Interactive guided tour** (Ant Design Tour) — auto-shows on first visit for each section, role-aware steps
-- **Help documentation** — paginated 8-page in-app manual covering all features, accessible from the nav bar
-- **i18n** — Full English & French support including all tour steps and help pages
+### 系统功能
+- 🔑 JWT 认证 + 会话管理
+- 🛡️ 基于角色的导航和页面访问控制
+- 🔔 通知系统（铃铛图标、未读计数、标记为已读）
+- 📊 响应式数据表（搜索、筛选、排序、分页）
+- 📤 文件上传（UUID 命名）
+- 💾 职位发布草稿自动保存
+- 🎯 跨页面导航（高亮和滚动到目标）
+- 🎓 交互式引导工具（Ant Design Tour）
+- 📖 帮助文档（分页 8 页应用内手册）
+- 🌐 完整的英文和法文支持
 
 ---
 
-## Project Structure
+## 项目结构
 
 ```
 PartnerHub/
-├── frontend/                    # Next.js 16 (App Router)
-│   ├── app/                     # Pages
-│   │   ├── login/               # Authentication
-│   │   ├── admin/               # Admin: users, roles, permissions, dictionary
-│   │   ├── applicant/           # Applicant profile
-│   │   ├── template/            # Job post templates
-│   │   ├── post/                # Job post creation & detail
-│   │   └── application/         # Application review detail
-│   ├── components/              # Shared components
-│   │   ├── home/                # Role-based home views (with Tour)
-│   │   ├── layout/              # Navigation, menu, breadcrumb (Help modal, Guide)
-│   │   └── table/               # Reusable data table
-│   ├── api/                     # API client functions
-│   └── lib/                     # Utilities, i18n, state, interceptors
-│
-├── backend/                     # NestJS 11
+├── backend/                     # NestJS 11 后端
 │   ├── src/
-│   │   ├── auth/                # JWT authentication
-│   │   ├── users/               # User management
-│   │   ├── roles/               # Role management
-│   │   ├── permissions/         # Permission management
-│   │   ├── job-post/            # Job post CRUD & sorting
-│   │   ├── job-post-template/   # Template CRUD
-│   │   ├── application/         # Application management
-│   │   ├── applicant-info/      # Applicant profile
-│   │   ├── notification/        # Notification system
-│   │   ├── dictionary/          # Config dictionary
-│   │   ├── audit-trail/         # Change logging
-│   │   ├── upload/              # File upload
-│   │   └── prisma/              # Database service
-│   └── prisma/
-│       ├── schema.prisma        # Database schema (10 models)
-│       ├── seed.mjs             # Roles, permissions, dictionary seed
-│       └── migrations/          # 21 migration files
+│   │   ├── auth/                # JWT 认证
+│   │   ├── users/               # 用户管理
+│   │   ├── roles/               # 角色管理
+│   │   ├── permissions/         # 权限管理
+│   │   ├── job-post/            # 职位发布 CRUD
+│   │   ├── job-post-template/   # 职位模板
+│   │   ├── application/         # 应用管理
+│   │   ├── applicant-info/      # 申请人信息
+│   │   ├── notification/        # 通知系统
+│   │   ├── dictionary/          # 字典管理
+│   │   ├── audit-trail/         # 变更日志
+│   │   ├── upload/              # 文件上传
+│   │   └── prisma/              # 数据库服务
+│   ├── prisma/
+│   │   ├── schema.prisma        # 数据库 schema（10 个模型）
+│   │   ├── seed.mjs             # 初始化角色、权限、字典
+│   │   └── migrations/          # 21 个迁移文件
+│   ├── Dockerfile               # 生产镜像
+│   └── package.json
 │
-├── start.ps1                    # One-click start (PostgreSQL + Backend + Frontend)
-└── stop.ps1                     # One-click stop all services
+├── frontend/                    # Next.js 16 前端
+│   ├── app/                     # 页面
+│   │   ├── login/               # 认证
+│   │   ├── admin/               # 用户、角色、权限、字典
+│   │   ├── applicant/           # 申请人信息
+│   │   ├── template/            # 职位模板
+│   │   ├── post/                # 职位创建和详情
+│   │   └── application/         # 应用审核详情
+│   ├── components/              # 共享组件
+│   │   ├── home/                # 基于角色的首页（带 Tour）
+│   │   ├── layout/              # 导航、菜单、面包屑
+│   │   └── table/               # 可复用数据表
+│   ├── api/                     # API 客户端函数
+│   ├── lib/                     # 工具、i18n、状态、拦截器
+│   ├── Dockerfile               # 生产镜像
+│   └── package.json
+│
+├── docker-compose.yml           # Docker Compose 配置
+├── start.ps1                    # 一键启动脚本（PowerShell）
+├── stop.ps1                     # 一键停止脚本（PowerShell）
+├── .gitignore
+└── README.md                    # 本文件
 ```
 
 ---
 
-## Database Schema
+## 数据库 Schema
 
+**核心关系：**
 ```
 User ──< JobPost ──< Application >── User (applicant)
   │         │
@@ -117,158 +126,345 @@ User ──< JobPost ──< Application >── User (applicant)
 Dictionary (key-value configuration)
 ```
 
-**10 models**: User, Role, Permission, Dictionary, AuditTrail, JobPostTemplate, JobPost, ApplicantInformation, Application, Notification
+**10 个模型**: User、Role、Permission、Dictionary、AuditTrail、JobPostTemplate、JobPost、ApplicantInformation、Application、Notification
 
-**Enums**: `JobPostState` (active, closed) · `ApplicationState` (applied, reviewed, rejected)
+**枚举**: `JobPostState`（active、closed） · `ApplicationState`（applied、reviewed、rejected）
 
 ---
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前置要求
 
-- **Node.js** ≥ 18
-- **PostgreSQL** 15+ (or use the portable version included in `.postgres/`)
+- **Node.js** 20+ （[下载](https://nodejs.org/)）
+- **PostgreSQL** 15+（[下载](https://www.postgresql.org/download/)）**或** **Docker** + **Docker Compose**
+- **npm** 10+（随 Node.js 自动安装）
+- **Git**
 
-### 1. Clone & Install
+### 选项 1：本地启动（Windows PowerShell）
 
-```bash
-git clone https://github.com/linmengwei68/yujie-xie-DemoProject.git
-cd yujie-xie-DemoProject
-npm install
-cd frontend && npm install
-cd ../backend && npm install
-```
-
-### 2. Configure Environment
-
-```bash
-cp backend/.env.example backend/.env
-# Edit backend/.env if using a different database
-```
-
-Default configuration (works out of the box with local PostgreSQL):
-
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/partnerhub"
-PORT=3001
-FRONTEND_URL="http://localhost:3000"
-```
-
-### 3. Initialize Database
-
-```bash
-cd backend
-npx prisma migrate deploy
-npx prisma db seed
-```
-
-### 4. Start Development
-
-**Option A — One-click (Windows PowerShell):**
+#### 1. 克隆并安装依赖
 
 ```powershell
-.\start.ps1    # Starts PostgreSQL + Backend + Frontend
-.\stop.ps1     # Stops all services
+# 克隆项目
+git clone <repository-url>
+cd partner-hub
+
+# 安装根项目依赖
+npm install
+
+# 安装后端依赖
+npm install --prefix backend
+
+# 安装前端依赖
+npm install --prefix frontend
 ```
 
-**Option B — Manual:**
+#### 2. 配置数据库
+
+**选项 A：使用本地 PostgreSQL**
+- 安装并启动 PostgreSQL
+- 验证连接字符串：`postgresql://postgres:postgres@localhost:5432/partnerhub`
+- 编辑 `backend/.env` 并填写正确的连接字符串
+
+**选项 B：使用 Docker**（推荐）
+```powershell
+# 使用 Docker 和自动初始化启动项目
+.\start.ps1 -UseDocker
+```
+
+#### 3. 启动项目
+
+```powershell
+# 标准启动（需要 PostgreSQL 已运行）
+.\start.ps1
+
+# 使用 Docker PostgreSQL（推荐）
+.\start.ps1 -UseDocker
+
+# 跳过数据库初始化（不运行迁移）
+.\start.ps1 -SkipDb
+
+# 跳过种子数据（不设置测试账户）
+.\start.ps1 -SkipSeed
+```
+
+### 选项 2：Docker Compose（最简单）⭐
+
+```powershell
+# 构建并启动所有服务（PostgreSQL + Backend + Frontend）
+docker-compose up --build
+
+# 后台运行
+docker-compose up -d --build
+
+# 查看日志
+docker-compose logs -f backend
+
+# 停止服务
+docker-compose down
+
+# 清除所有数据并重新开始
+docker-compose down -v
+```
+
+### 访问应用
+
+启动后，在浏览器中访问：
+
+| 服务 | URL | 备注 |
+|---|---|---|
+| **前端** | http://localhost:3000 | 主应用 |
+| **后端 API** | http://localhost:3001 | REST API |
+| **API 文档** | http://localhost:3001/api | Swagger（如果配置） |
+| **健康检查** | http://localhost:3001/api/health | 检查后端状态 |
+
+### 测试账户
+
+运行 `npm run seed --prefix backend`（或自动初始化）后，以下账户可用：
+
+| 角色 | 邮箱 | 密码 | 权限 |
+|---|---|---|---|
+| **管理员** | admin@example.com | password123 | 所有权限 |
+| **项目负责人** | owner@example.com | password123 | 职位管理、审核 |
+| **申请人** | applicant@example.com | password123 | 浏览和申请 |
+
+---
+
+## 开发工作流
+
+### 仅启动前端
+
+```powershell
+cd frontend
+npm run dev
+# 访问 http://localhost:3000
+```
+
+### 仅启动后端
+
+```powershell
+cd backend
+npm run start:dev
+# API 运行在 http://localhost:3001
+```
+
+### 同时启动两者
+
+```powershell
+# 方法 1：使用启动脚本
+.\start.ps1
+
+# 方法 2：使用 npm 命令
+npm run dev
+```
+
+### 数据库操作
 
 ```bash
-# Terminal 1: Backend (port 3001)
-cd backend && npm run start:dev
+# 运行待处理的迁移
+cd backend && npm run prisma:migrate
 
-# Terminal 2: Frontend (port 3000)
-cd frontend && npm run dev
+# 部署迁移到生产环境
+npm run prisma:migrate:deploy
+
+# 重置数据库（清除所有数据）⚠️
+cd backend
+npx prisma migrate reset
+
+# 填充测试数据
+npm run seed --prefix backend
+
+# 打开 Prisma Studio（可视化编辑数据库）
+cd backend && npx prisma studio
 ```
 
-### 5. Open in Browser
+---
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:3001
-- **Health Check**: http://localhost:3001/api/health
+## 构建生产版本
+
+### 本地构建
+
+```powershell
+# 构建前端
+npm run build:frontend
+
+# 构建后端
+npm run build:backend
+
+# 或同时构建
+npm run build:frontend && npm run build:backend
+```
+
+### 生成 Docker 镜像
+
+```powershell
+# 单独构建镜像
+docker build -t partnerhub-backend:latest ./backend
+docker build -t partnerhub-frontend:latest ./frontend
+
+# 或使用 Docker Compose
+docker-compose build
+```
+
+### 部署到生产环境
+
+```bash
+# 设置生产环境变量
+set DATABASE_URL="your-production-database-url"
+set JWT_SECRET="generate-a-strong-random-key"
+set FRONTEND_URL="your-domain.com"
+
+# 运行迁移和初始化
+cd backend && npm run start:prod
+
+# 使用 Docker（建议）
+docker-compose -f docker-compose.prod.yml up -d
+```
 
 ---
 
-## Default Accounts
+## 停止服务
 
-After running `npx prisma db seed`:
+```powershell
+# 停止所有本地服务
+.\stop.ps1
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@partnerhub.com | admin123 |
+# 停止并移除 Docker 容器
+.\stop.ps1 -RemoveDocker
 
-You can register new Applicant or Project Owner accounts from the login page.
+# 或手动停止：
+# 1. 在启动 PowerShell 窗口按 Ctrl+C
+# 2. PostgreSQL 会自动关闭
+```
 
 ---
 
-## API Overview
+## API 端点概览
 
-| Module | Endpoints |
+| 模块 | 主要端点 |
 |---|---|
-| **Auth** | `POST /api/auth/login` · `POST /api/auth/register` · `POST /api/auth/refresh` · `GET /api/auth/me` |
-| **Users** | `GET /api/users` · `POST /api/users` · `PUT /api/users/:id` · `DELETE /api/users/:id` |
-| **Roles** | `GET /api/roles` · `POST /api/roles` · `PUT /api/roles/:id` · `DELETE /api/roles/:id` |
-| **Permissions** | `GET /api/permissions` · `POST /api/permissions` · `PUT /api/permissions/:id` · `DELETE /api/permissions/:id` |
-| **Job Posts** | `GET /api/job-posts` · `POST /api/job-posts` · `PATCH /api/job-posts/:id` · `DELETE /api/job-posts/:id` |
-| **Templates** | `GET /api/job-post-templates` · `POST /api/job-post-templates` · `PUT /api/job-post-templates/:id` |
-| **Applications** | `POST /api/applications` · `GET /api/applications/mine` · `PATCH /api/applications/:id/state` |
-| **Notifications** | `GET /api/notifications` · `PATCH /api/notifications/:id/reviewed` · `PATCH /api/notifications/reviewed-all` |
-| **Dictionary** | `GET /api/dictionary` · `POST /api/dictionary` · `PUT /api/dictionary/:id` · `DELETE /api/dictionary/:id` |
-| **Upload** | `POST /api/upload` · `GET /api/upload/:filename` |
-| **Audit Trail** | `GET /api/audit-trail` |
+| **认证** | `POST /api/auth/login` · `GET /api/auth/me` |
+| **用户** | `GET /api/users` · `POST /api/users` · `PUT /api/users/:id` |
+| **角色** | `GET /api/roles` · `POST /api/roles` · `DELETE /api/roles/:id` |
+| **权限** | `GET /api/permissions` · `POST /api/permissions` |
+| **职位** | `GET /api/job-posts` · `POST /api/job-posts` · `PATCH /api/job-posts/:id` |
+| **模板** | `GET /api/job-post-templates` · `POST /api/job-post-templates` |
+| **应用** | `POST /api/applications` · `PATCH /api/applications/:id/state` |
+| **通知** | `GET /api/notifications` · `PATCH /api/notifications/:id/reviewed` |
+| **字典** | `GET /api/dictionary` · `POST /api/dictionary` |
+| **上传** | `POST /api/upload` · `GET /api/upload/:filename` |
+| **审计** | `GET /api/audit-trail` |
 
 ---
 
-## Key Design Decisions
+## 环境变量
 
-1. **Monorepo structure** — Frontend and backend in one repository for easy development and deployment
-2. **Portable PostgreSQL** — Included in `.postgres/` for zero-config local development
-3. **JSON fields for flexible schemas** — Job post questions and application answers stored as JSON to support dynamic form fields
-4. **In-memory sorting for applied count** — Job posts sorted by unreviewed application count using application-layer logic rather than complex SQL
-5. **Ref-based URL cleanup** — Filter parameters captured on mount and immediately removed from URL for clean navigation
-6. **Draft auto-save** — Job post creation form saves to sessionStorage on every change
-7. **Role-aware guided tours** — Each role (Applicant, Owner, Admin) gets a tailored interactive tour using Ant Design `<Tour />`, triggered once per section via localStorage. The Guide button resets all tours; clicking it on admin pages stays on the current admin page
-8. **In-app help documentation** — 8-page paginated modal with full feature documentation, powered by i18n so content adapts to the selected language
-9. **RBAC permission flow** — Permissions → Roles → Users chain; DataTable columns use `accessCode` to gate inline editing; admin tour explains the complete permission lifecycle
+### 后端 (`backend/.env`)
 
----
+```env
+# 数据库连接
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/partnerhub"
 
-## Interactive Tour & Help
+# 服务配置
+PORT=3001
+FRONTEND_URL="http://localhost:3000"
 
-### Guided Tour (Guide button)
-The app includes role-based interactive walkthroughs using Ant Design's `<Tour />` component:
+# JWT 认证
+JWT_SECRET="your-secret-key-change-in-production"
+JWT_EXPIRATION="24h"
+```
 
-| Section | Steps | Trigger |
-|---|---|---|
-| **Login page** | 3 steps — tabs, form overview, role selection | Auto on first visit |
-| **Applicant home** | 4 steps — tabs, search, cards, detail panel | Auto on first visit |
-| **Owner home** | 3 steps — table, templates, create post | Auto on first visit |
-| **Admin sidebar** | 6 steps — RBAC overview, Users, Roles, Permissions, Dictionary, Audit Trail | Auto on first admin page visit |
+### 前端 (`frontend/.env.local`)
 
-Tours are stored in `localStorage` and only show once. Click the **Guide** button in the nav bar to reset and replay all tours.
-
-### Help Documentation (Help button)
-A paginated 8-page manual accessible from the nav bar covers:
-1. Overview & roles
-2. Authentication & registration
-3. Applicant features
-4. Project Owner features
-5. Admin — Users
-6. Admin — Roles & Permissions (RBAC flow)
-7. Admin — Dictionary & Audit Trail
-8. Notifications & Navigation
-
-All content is fully translated (EN / FR).
+```env
+# API 地址
+NEXT_PUBLIC_API_URL="http://localhost:3001"
+```
 
 ---
 
-## Screenshots
+## 故障排除
 
-*Coming soon*
+### PostgreSQL 连接错误
+
+**问题：** `Error: connect ECONNREFUSED 127.0.0.1:5432`
+
+**解决方案：**
+1. 确认 PostgreSQL 正在运行
+2. 检查 `backend/.env` 中的 `DATABASE_URL`
+3. 使用 `.\start.ps1 -UseDocker` 启动 Docker 版本
+
+### 端口已被占用
+
+**问题：** `Error: listen EADDRINUSE :::3000` 或 `:::3001`
+
+**解决方案：**
+```powershell
+# 查找占用特定端口的进程
+Get-NetTCPConnection -LocalPort 3000 | Select-Object OwningProcess
+Get-Process -Id <ProcessId> | Stop-Process -Force
+```
+
+### 模块未找到错误
+
+**问题：** `Error: Cannot find module '@nestjs/common'`
+
+**解决方案：**
+```bash
+# 清除并重新安装依赖
+rm -r backend/node_modules backend/package-lock.json
+cd backend && npm install
+```
+
+### 数据库迁移失败
+
+**问题：** `Error: Migration X failed`
+
+**解决方案：**
+```bash
+# 重置数据库并重新运行迁移 ⚠️ 将删除所有数据
+cd backend
+npx prisma migrate reset
+```
 
 ---
 
-## License
+## 贡献指南
 
-This project is for demonstration purposes.
+1. Fork 项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add: AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+---
+
+## 许可
+
+此项目用于演示目的。详见 [LICENSE](LICENSE) 文件。
+
+---
+
+## 联系方式
+
+- **项目链接：** [GitHub Repository](https://github.com/your-username/partner-hub)
+- **问题报告：** [Issues](https://github.com/your-username/partner-hub/issues)
+
+---
+
+## 相关资源
+
+- 📘 [Next.js 文档](https://nextjs.org/docs)
+- 📘 [NestJS 文档](https://docs.nestjs.com)
+- 📘 [Prisma 文档](https://www.prisma.io/docs)
+- 📘 [PostgreSQL 文档](https://www.postgresql.org/docs)
+- 🐳 [Docker 文档](https://docs.docker.com)
+- 🎨 [Ant Design](https://ant.design)
+- 🎨 [Tailwind CSS](https://tailwindcss.com)
+
+---
+
+**最后更新：** 2026 年 3 月 30 日  
+**版本：** 1.0.0  
+**状态：** 🔧 开发中

@@ -102,15 +102,15 @@ export class RolesController {
     return this.rolesPageService.deleteRole(parseInt(id, 10), req.user);
   }
 
+  // GET /api/roles/:name/permissions — 公开接口（必须在 GET() 之前）
+  @Get(':name/permissions')
+  getPermissions(@Param('name') name: string) {
+    return this.rolesService.getPermissionsByRoleName(name);
+  }
+
   // GET /api/roles — 公开接口（获取所有角色简要列表）
   @Get()
   getAllRoles() {
     return this.rolesService.getAllRoles();
-  }
-
-  // GET /api/roles/:name/permissions — 公开接口
-  @Get(':name/permissions')
-  getPermissions(@Param('name') name: string) {
-    return this.rolesService.getPermissionsByRoleName(name);
   }
 }

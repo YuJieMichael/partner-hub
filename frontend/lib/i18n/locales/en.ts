@@ -39,6 +39,7 @@ const en = {
     register_failed: 'Registration failed, please try again',
     register_success: 'Registration successful, please log in',
     roles_label: 'Roles',
+    roles_placeholder: 'Select roles',
     roles_required: 'Please select at least one role',
     email_already_exists: 'This email is already registered',
     no_token: 'Please log in to continue',

@@ -41,6 +41,7 @@ const fr: Translations = {
     register_failed: "L'inscription a échoué, veuillez réessayer",
     register_success: 'Inscription réussie, veuillez vous connecter',
     roles_label: 'Rôles',
+    roles_placeholder: 'Sélectionner les rôles',
     roles_required: 'Veuillez sélectionner au moins un rôle',
     email_already_exists: 'Cet e-mail est déjà enregistré',
     no_token: 'Veuillez vous connecter pour continuer',

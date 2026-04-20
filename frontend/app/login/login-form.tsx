@@ -15,9 +15,11 @@ export interface RoleWithPermissions {
 
 interface Props {
   rolesWithPermissions: RoleWithPermissions[];
+  isLoadingRoles?: boolean;
+  rolesError?: string | null;
 }
 
-export default function LoginForm({ rolesWithPermissions }: Props) {
+export default function LoginForm({ rolesWithPermissions, isLoadingRoles = false, rolesError = null }: Props) {
   const router = useRouter();
   const t = useT();
   const { message } = App.useApp();
@@ -147,15 +149,16 @@ export default function LoginForm({ rolesWithPermissions }: Props) {
         name="roles"
         rules={[{ required: true, message: t.auth.roles_required }]}
       >
-        <Checkbox.Group>
-          <div className="flex flex-col gap-2">
-            {rolesWithPermissions.map(({ role }) => (
-              <Checkbox key={role} value={role}>
-                {role}
-              </Checkbox>
-            ))}
-          </div>
-        </Checkbox.Group>
+        <div>
+          <Checkbox.Group
+            disabled={isLoadingRoles}
+            options={rolesWithPermissions.map(({ role }) => ({
+              label: role,
+              value: role,
+            }))}
+          />
+          {rolesError && <div style={{ color: '#ff4d4f', marginTop: '8px', fontSize: '12px' }}>{rolesError}</div>}
+        </div>
       </Form.Item>
       <Form.Item className="mb-0 mt-6">
         <Button type="primary" htmlType="submit" size="large" block loading={loading}>
